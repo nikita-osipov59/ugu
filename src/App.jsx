@@ -1,5 +1,9 @@
+import { Container } from "./components/ui/Container";
+
 function App() {
-  return <>test</>;
+  <Container>
+    
+  </Container>
 }
 
 export default App;
