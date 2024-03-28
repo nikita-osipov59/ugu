@@ -1,8 +1,10 @@
-import React from 'react';
+import { NavBar } from '../../ui/Navbar';
 
 const ProjectShowcase = () => {
     return(
-        <div></div>
+        <div>
+            <NavBar/>
+        </div>
     );
 }
 

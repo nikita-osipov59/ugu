@@ -1,9 +1,12 @@
 import { Container } from "./components/ui/Container";
 
+
 function App() {
-  <Container>
-    
-  </Container>
+  return(
+    <Container>
+      
+    </Container>
+  )
 }
 
 export default App;

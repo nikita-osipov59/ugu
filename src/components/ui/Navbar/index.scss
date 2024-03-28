@@ -1,0 +1,12 @@
+@import "../../../styles/variables.modules";
+
+.navbar_cont{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: $color-grey-background;
+    display: flex;
+    justify-content: space-between;
+    line-height: $lineHeight-medium;
+}
