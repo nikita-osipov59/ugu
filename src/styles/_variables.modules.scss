@@ -4,7 +4,12 @@ $color-accent: #000000;
 $color-secondary: #fff;
 $color-primary: #61ff00;
 $color-background: #282c33;
-$color-grey-background: #D9D9D9;
+$color-grey-background: #d9d9d9;
+$color-blue: #514eff;
+$color-bg-form: rgba(255, 255, 255, 30%);
+
+// button
+$color-btn-accent: #ffdc60f2;
 
 // variables
 $font: Inter;
@@ -12,10 +17,13 @@ $font: Inter;
 $fontSize-default: 16px;
 $fontSize-medium: 24px;
 $fontSize-big: 30px;
+$fontSize-huge: 48px;
 
 $fontWeight-regular: 400;
 $fontWeight-medium: 500;
 $fontWeight-semibold: 600;
+$fontWeight-bold: 700;
+$fontWeight-black: 900;
 
 $lineHeight-low: 1;
 $lineHeight-default: 1.5;

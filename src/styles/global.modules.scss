@@ -11,7 +11,7 @@ body {
   font-weight: $fontWeight-regular;
   font-size: $fontSize-default;
   color: $color-accent;
-  background-color: #fff;
+  background-color: $color-background;
   min-width: 320px;
   min-height: 100vh;
 }
