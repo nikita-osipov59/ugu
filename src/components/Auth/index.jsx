@@ -1,11 +1,20 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import AuthStyle from "./Auth.module.scss";
 import { Container } from "../ui/Container";
 
 const Auth = () => {
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [status, setStatus] = useState(false);
+  const navigate = useNavigate();
+
+  const onFormSubmit = (e) => {
+    setStatus(true);
+    console.log(login);
+    console.log(password);
+  };
 
   return (
     <div className={AuthStyle.background}>
@@ -18,12 +27,14 @@ const Auth = () => {
             <div>краткое описание сайта бла бла бла тут что-то важное</div>
           </div>
           <div className={AuthStyle.auth}>
-            <p className={AuthStyle.title}>Авторизация</p>
-            <form>
+            <p className={AuthStyle.title}>
+              {status ? "Авторизация" : "Регистрация"}
+            </p>
+            <form onSubmit={onFormSubmit}>
               <label>
                 Login
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setLogin(e.target.value)}
                   id="login"
                   type="text"
                   name="login"
@@ -35,23 +46,23 @@ const Auth = () => {
                 <input
                   onChange={(e) => setPassword(e.target.value)}
                   id="password"
-                  type="text"
+                  type="password"
                   name="password"
                   required
                 />
               </label>
-              <button
-                type="submit"
-                name="submit"
-                onChange={(e) => e.preventDefalut()}
-              >
-                Войти
-              </button>
-
-              <p>
-                Еще нет аккаунта?&nbsp;
-                <a href="#">Регистрация</a>
-              </p>
+              <button type="submit">Войти</button>
+              {status ? (
+                <p>
+                  Нет аккаунта?&nbsp;
+                  <Link onClick={() => setStatus(false)}>Регистрация</Link>
+                </p>
+              ) : (
+                <p>
+                  Есть аккаунт?&nbsp;
+                  <Link onClick={() => setStatus(true)}>Авторизация</Link>
+                </p>
+              )}
             </form>
           </div>
         </div>

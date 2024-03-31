@@ -1,15 +1,10 @@
-import { useState } from "react";
-
-import Auth from "./components/Auth";
-import Reg from "./components/Reg";
 import { Container } from "./components/ui/Container";
+import { Router } from "./components/Router";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
-
   return (
     <>
-      {isLogin ? <Auth /> : <Reg />}
+      <Router />
       <Container></Container>
     </>
   );
