@@ -5,8 +5,8 @@ export const NavBar = () => {
     return(
         <div>
             <ul className='navbar_cont'>
-                <li>LOGO</li> {/*TODO добавить лого */}
-                <li><Button text="UserName"/></li>
+                <li><img className='logo_cont'/></li>
+                <li><button>Username</button></li>
             </ul>
         </div>
     );

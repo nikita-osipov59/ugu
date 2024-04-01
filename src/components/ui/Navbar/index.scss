@@ -1,12 +1,26 @@
 @import "../../../styles/variables.modules";
 
+
+.logo_cont{
+    background-image: url(/logo.png);
+    background-repeat: no-repeat;
+    height: 54px;
+    width: 524px;
+}
 .navbar_cont{
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 21px 28px;
     overflow: hidden;
     background-color: $color-grey-background;
     display: flex;
     justify-content: space-between;
     line-height: $lineHeight-medium;
+    button{
+        background-color: $color-btn-user;
+        color: #fff;
+        border-radius: $border-radius-default;
+        padding: 10px 30px;
+        margin-top: 10px;
+    }
 }
