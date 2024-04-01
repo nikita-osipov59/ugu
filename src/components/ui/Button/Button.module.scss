@@ -1,0 +1,9 @@
+@import "../../../styles/variables.modules.scss";
+
+.button {
+  padding: 5px 45px;
+  border-radius: 25px;
+  border: 1px solid $color-accent;
+  font-size: $fontSize-big;
+  font-weight: $fontWeight-medium;
+}
