@@ -1,19 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import AuthStyle from "./Auth.module.scss";
 import { Container } from "../ui/Container";
+import axios from "axios";
 
 const Auth = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
-  const navigate = useNavigate();
 
-  const onFormSubmit = (e) => {
+  // useEffect(() => {
+  //   onFormSubmit();
+  // }, []);
+
+  const onFormSubmit = async (e) => {
     setStatus(true);
-    console.log(login);
-    console.log(password);
+    e.preventDefault();
+
+    await axios
+      .post("https://backendyogy.onrender.com/api/v1/auth/register", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        username: login,
+        password: password,
+      })
+
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
