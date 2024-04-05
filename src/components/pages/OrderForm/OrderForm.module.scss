@@ -1,0 +1,39 @@
+@import "../../../styles/variables.modules";
+
+.order_info{
+    margin-top: 3rem;
+    position: relative;
+    h2{
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 14px;
+    }
+    p{
+        font-size: 18px;
+        line-height: 30px;
+    }
+    div{
+        float: right;
+        position: absolute;
+        top: 5%;
+        right: 20px;
+        button{
+            margin-right: 15px;
+        }
+    }
+
+}
+.comments_list{
+    margin-top: 4rem;
+    h2{
+        font-size: 20px;
+        margin-bottom: 2rem;
+    }
+    div{
+        background-color: #D9D9D980;
+        border-radius: $border-radius-default;
+        padding: 15px;
+        width: 60%;
+        font-size: 18px;
+    }
+}
