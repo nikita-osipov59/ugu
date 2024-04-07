@@ -1,42 +1,39 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../UserProvider";
 import axios from "axios";
 
-import AuthStyle from "./Auth.module.scss";
-import { UserContext } from "../UserProvider";
+import RegStyle from "./Reg.module.scss";
 import { Container } from "../ui/Container";
 
-const Auth = () => {
+const Reg = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [status, setStatus] = useState(false);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   onFormSubmit();
+  // }, []);
+
   const onFormSubmit = async (e) => {
+    setStatus(true);
     e.preventDefault();
 
     await axios
-      .post(
-        "https://backendyogy.onrender.com/api/v1/auth/login",
-        {
-          username: login,
-          password: password,
+      .post("https://backendyogy.onrender.com/api/v1/auth/register", {
+        Headers: {
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      )
+        username: login,
+        password: password,
+      })
 
-      .then(({ data }) => {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            ...data,
-          })
-        );
-        setIsAuth(true);
-        navigate("/", { replace: true });
+      .then(() => {
+        navigate("/Auth", { replace: true });
+        setLogin("");
+        setPassword("");
       })
       .catch(function (error) {
         console.log(error);
@@ -44,17 +41,17 @@ const Auth = () => {
   };
 
   return (
-    <div className={AuthStyle.background}>
+    <div className={RegStyle.background}>
       <Container>
-        <div className={AuthStyle.wrapper}>
-          <div className={AuthStyle.box}>
+        <div className={RegStyle.wrapper}>
+          <div className={RegStyle.box}>
             <p>
               <b>Добро пожаловать!</b>
             </p>
             <div>краткое описание сайта бла бла бла тут что-то важное</div>
           </div>
-          <div className={AuthStyle.auth}>
-            <p className={AuthStyle.title}>Авторизация</p>
+          <div className={RegStyle.auth}>
+            <p className={RegStyle.title}>Регистрация</p>
             <form onSubmit={onFormSubmit}>
               <label>
                 Login
@@ -63,6 +60,7 @@ const Auth = () => {
                   id="login"
                   type="text"
                   name="login"
+                  placeholder="example@mail.ru"
                   required
                 />
               </label>
@@ -77,10 +75,19 @@ const Auth = () => {
                 />
               </label>
               <button type="submit">Войти</button>
-              <p>
-                Нет аккаунта?&nbsp;
-                <Link to="/reg">Регистрация</Link>
-              </p>
+              {status ? (
+                <p>
+                  Нет аккаунта?&nbsp;
+                  <Link onClick={() => setStatus(false)}>Регистрация</Link>
+                </p>
+              ) : (
+                <p>
+                  Есть аккаунт?&nbsp;
+                  <Link to="/auth" onClick={() => setStatus(true)}>
+                    Авторизация
+                  </Link>
+                </p>
+              )}
             </form>
           </div>
         </div>
@@ -89,4 +96,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default Reg;
