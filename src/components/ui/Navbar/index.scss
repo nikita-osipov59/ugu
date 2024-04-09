@@ -25,5 +25,13 @@
     }
     div{
         display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 8%;
+        right: 3.3%;
+        border: $border-default;
+        border-radius: $border-radius-default;
+        padding: 5px 6px;
+        z-index: 1;
     }
 }
