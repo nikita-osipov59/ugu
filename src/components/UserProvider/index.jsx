@@ -10,10 +10,14 @@ export const UserProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (localStorage.getItem("user") !== null) {
-      setUser(JSON.parse(localStorage.getItem("user")));
-      setUser({ isAuth: true });
-    } else setUser({ isAuth: false });
+    try{
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      setUser({ ...userInfo ,isAuth: true });
+    } 
+    catch(err) {
+      setUser({ isAuth: false });
+      console.log(err);
+    }
   }, [setUser]);
 
   const value = {

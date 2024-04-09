@@ -32,6 +32,8 @@ const Auth = () => {
         localStorage.setItem(
           "user",
           JSON.stringify({
+            login,
+            password,
             ...data,
           })
         );
