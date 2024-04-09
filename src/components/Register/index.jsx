@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../UserProvider";
 import axios from "axios";
 
+import { ROUTER_PATH } from "../const/PATH";
 import RegStyle from "./Reg.module.scss";
 import { Container } from "../ui/Container";
 
-const Reg = () => {
+const Register = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -18,7 +18,6 @@ const Reg = () => {
   // }, []);
 
   const onFormSubmit = async (e) => {
-    setStatus(true);
     e.preventDefault();
 
     await axios
@@ -31,7 +30,7 @@ const Reg = () => {
       })
 
       .then(() => {
-        navigate("/Auth", { replace: true });
+        navigate(ROUTER_PATH.AUTH, { replace: true });
         setLogin("");
         setPassword("");
       })
@@ -78,14 +77,12 @@ const Reg = () => {
               {status ? (
                 <p>
                   Нет аккаунта?&nbsp;
-                  <Link onClick={() => setStatus(false)}>Регистрация</Link>
+                  <Link>Регистрация</Link>
                 </p>
               ) : (
                 <p>
                   Есть аккаунт?&nbsp;
-                  <Link to="/auth" onClick={() => setStatus(true)}>
-                    Авторизация
-                  </Link>
+                  <Link to="/auth">Авторизация</Link>
                 </p>
               )}
             </form>
@@ -96,4 +93,4 @@ const Reg = () => {
   );
 };
 
-export default Reg;
+export default Register;

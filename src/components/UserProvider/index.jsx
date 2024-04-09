@@ -3,18 +3,18 @@ import React, { createContext, useEffect, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({
     login: "",
     password: "",
+    isAuth: Boolean,
   });
 
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
       setUser(JSON.parse(localStorage.getItem("user")));
-      setIsAuth(true);
-    }
-  }, [isAuth]);
+      setUser({ isAuth: true });
+    } else setUser({ isAuth: false });
+  }, [setUser]);
 
   const value = {
     user,
@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ value, isAuth }}>
+    <UserContext.Provider value={{ value, user }}>
       {children}
     </UserContext.Provider>
   );

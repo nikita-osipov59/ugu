@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { ROUTER_PATH } from "../const/PATH";
 import AuthStyle from "./Auth.module.scss";
-import { UserContext } from "../UserProvider";
 import { Container } from "../ui/Container";
 
 const Auth = () => {
@@ -35,8 +35,7 @@ const Auth = () => {
             ...data,
           })
         );
-        setIsAuth(true);
-        navigate("/", { replace: true });
+        navigate(ROUTER_PATH.HOME);
       })
       .catch(function (error) {
         console.log(error);
@@ -79,7 +78,7 @@ const Auth = () => {
               <button type="submit">Войти</button>
               <p>
                 Нет аккаунта?&nbsp;
-                <Link to="/reg">Регистрация</Link>
+                <Link to="/register">Регистрация</Link>
               </p>
             </form>
           </div>
