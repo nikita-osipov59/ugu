@@ -5,7 +5,7 @@ import { UserContext } from "../../UserProvider";
 import { ROUTER_PATH } from "../../const/PATH";
 
 export const PrivateRoute = () => {
-  const { user } = useContext(UserContext);
+  const { auth } = useContext(UserContext);
 
-  return user.isAuth ? <Outlet /> : <Navigate to={ROUTER_PATH.AUTH} />;
+  return auth.isAuth ? <Outlet /> : <Navigate to={ROUTER_PATH.AUTH} />;
 };

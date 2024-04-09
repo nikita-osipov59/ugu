@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { UserContext } from "../UserProvider";
 import { ROUTER_PATH } from "../const/PATH";
 import AuthStyle from "./Auth.module.scss";
 import { Container } from "../ui/Container";
@@ -10,6 +11,8 @@ const Auth = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const { value } = useContext(UserContext);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
@@ -37,13 +40,14 @@ const Auth = () => {
             ...data,
           })
         );
+
         navigate(ROUTER_PATH.HOME);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
-
+  console.log(value);
   return (
     <div className={AuthStyle.background}>
       <Container>

@@ -3,30 +3,20 @@ import React, { createContext, useEffect, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    login: "",
-    password: "",
+  const [auth, setAuth] = useState({
     isAuth: Boolean,
   });
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    try{
-      const userInfo = JSON.parse(localStorage.getItem("user"));
-      setUser({ ...userInfo ,isAuth: true });
-    } 
-    catch(err) {
-      setUser({ isAuth: false });
-      console.log(err);
-    }
+    if (localStorage.getItem("user") !== null) {
+      setUser(JSON.parse(localStorage.getItem("user")), { ...user });
+      setAuth({ isAuth: true });
+    } else setAuth({ isAuth: false });
   }, [setUser]);
 
-  const value = {
-    user,
-    setUser,
-  };
-
   return (
-    <UserContext.Provider value={{ value, user }}>
+    <UserContext.Provider value={{ user, auth }}>
       {children}
     </UserContext.Provider>
   );
