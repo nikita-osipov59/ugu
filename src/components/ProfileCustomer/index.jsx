@@ -1,49 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
 
 import Style from "./Style.module.scss";
+import { UserContext } from "../UserProvider";
 import { Container } from "../ui/Container";
 import { NavBar } from "../ui/Navbar";
 import { Button } from "../ui/Button";
 
 const ProfileCustomer = () => {
-  const [status, setStatus] = useState([
-    {
-      id: 1,
-      title: "В обработке",
-      status: "Panding",
-    },
-    {
-      id: 2,
-      title: "Принят",
-      status: "Accept",
-    },
-    {
-      id: 3,
-      title: "Выполнен",
-      status: "Done",
-    },
-    {
-      id: 4,
-      title: "Отклонен",
-      status: "Rejected",
-    },
-  ]);
+  const { user } = useContext(UserContext);
+  const [data, setData] = useState("");
 
-  const filter = (props) => {
-    const test = document.getElementById("card");
-    status
-      .filter((value) => {
-        return value.status === props;
+  useEffect(() => {
+    getInfo();
+  }, [user]);
+
+  const getInfo = async (e) => {
+    await axios
+      .get("https://backendyogy.onrender.com/api/v1/auth/", {
+        headers: {
+          Authorization: `Bearer ${user.access_token}`,
+        },
       })
-      .map((value) => {
-        console.log(value.title);
-        test.innerHTML = `<div id="card" class=${Style.card}>
-            <h2 class=${Style.cardTitle}>${value.title}
-            </h2>
-            <p class=${Style.cardDescription}>${value.description}</p>
-          </div>`;
+      .then(({ data }) => {
+        const res = data;
+        setData(res);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   };
+
+  useEffect(() => {
+    getOrders();
+  }, [user]);
+
+  const getOrders = async (e) => {
+    await axios
+      .get(
+        "https://backendyogy.onrender.com/api/v1/orders/sorted?mode=В обработке&offset=0",
+        {
+          headers: {
+            Authorization: `Bearer ${user.access_token}`,
+          },
+        }
+      )
+      .then(({ data }) => {
+        const res = data;
+        setData(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <NavBar />
@@ -51,15 +61,15 @@ const ProfileCustomer = () => {
         <section className={Style.profileBox}>
           <div className={Style.description}>
             <p>Имя заказчика</p>
-            <p>Какое-то имя</p>
+            <p>{data.login}</p>
           </div>
           <div className={Style.description}>
             <p>Название компании</p>
-            <p>Какое-то название компании</p>
+            <p>{data.id}</p>
           </div>
           <div className={Style.description}>
-            <p>Какая-то инфа</p>
-            <p>Инфа</p>
+            <p>Роль</p>
+            <p>{data.roles}</p>
           </div>
         </section>
         <section className={Style.order}>
@@ -75,7 +85,9 @@ const ProfileCustomer = () => {
               <fieldset className={Style.fieldset}>
                 <label>
                   <input
-                    onClick={() => filter("Panding")}
+                    onClick={() => {
+                      getOrders();
+                    }}
                     type="radio"
                     value="В обработке"
                     name="status"
@@ -83,30 +95,15 @@ const ProfileCustomer = () => {
                   В обработке <img src="/panding.svg" alt="panding" />
                 </label>
                 <label>
-                  <input
-                    onClick={() => filter("Accept")}
-                    type="radio"
-                    value="Принят"
-                    name="status"
-                  />
+                  <input type="radio" value="Принят" name="status" />
                   Принят <img src="/confirm.svg" alt="confirm" />
                 </label>
                 <label>
-                  <input
-                    onClick={() => filter("Done")}
-                    type="radio"
-                    value="Выполнен"
-                    name="status"
-                  />
+                  <input type="radio" value="Выполнен" name="status" />
                   Выполнен <img src="/accept.svg" alt="accept" />
                 </label>
                 <label>
-                  <input
-                    onClick={() => filter("Rejected")}
-                    type="radio"
-                    value="Отклонен"
-                    name="status"
-                  />
+                  <input type="radio" value="Отклонен" name="status" />
                   Отклонен <img src="/rejected.svg" alt="rejected" />
                 </label>
               </fieldset>
@@ -120,3 +117,18 @@ const ProfileCustomer = () => {
 };
 
 export default ProfileCustomer;
+// const filter = (props) => {
+//   const test = document.getElementById("card");
+//   status
+//     .filter((value) => {
+//       return value.status === props;
+//     })
+//     .map((value) => {
+//       console.log(value.title);
+//       test.innerHTML = `<div id="card" class=${Style.card}>
+//           <h2 class=${Style.cardTitle}>${value.title}
+//           </h2>
+//           <p class=${Style.cardDescription}>${value.description}</p>
+//         </div>`;
+//     });
+// };

@@ -12,7 +12,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const { value } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ const Auth = () => {
         console.log(error);
       });
   };
-  console.log(value);
+
   return (
     <div className={AuthStyle.background}>
       <Container>
