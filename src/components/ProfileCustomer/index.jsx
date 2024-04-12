@@ -7,11 +7,13 @@ import { Container } from "../ui/Container";
 import { NavBar } from "../ui/Navbar";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
+import Loader from "../ui/Loader";
 
 const ProfileCustomer = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [member, setMember] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     getMember();
@@ -47,6 +49,7 @@ const ProfileCustomer = () => {
       .then(({ data }) => {
         const res = data;
         setData(res);
+        setLoading(true)
       })
       .catch(function (error) {
         console.log(error);
@@ -147,7 +150,7 @@ const ProfileCustomer = () => {
                 </label>
               </fieldset>
               <div className={Style.cardBox}>
-                {data.map((value) => {
+                {data? data.map((value) => {
                   return (
                     <Card
                       key={value.id}
@@ -155,7 +158,7 @@ const ProfileCustomer = () => {
                       description={value.description}
                     />
                   );
-                })}
+                }) :<Loader/>}
               </div>
             </div>
           </div>

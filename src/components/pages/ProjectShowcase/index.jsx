@@ -1,5 +1,6 @@
 import { Button } from '../../ui/Button';
 import { Filter } from '../../ui/Filter';
+import Loader from '../../ui/Loader';
 import { NavBar } from '../../ui/Navbar';
 import style from './ProjectShowcase.module.scss';
 
