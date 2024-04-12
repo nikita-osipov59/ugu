@@ -1,0 +1,17 @@
+@import "../../../styles/variables.modules";
+
+.card {
+  border: $border-default;
+  border-radius: $border-radius-default;
+  padding: 15px 40px 20px 30px;
+  width: 450px;
+  height: 250px;
+  .cardTitle {
+    font-weight: $fontWeight-bold;
+    font-size: $fontSize-medium;
+    max-width: 370px;
+  }
+  .cardDescription {
+    margin-top: 15px;
+  }
+}

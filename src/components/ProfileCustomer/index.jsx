@@ -6,18 +6,40 @@ import { UserContext } from "../UserProvider";
 import { Container } from "../ui/Container";
 import { NavBar } from "../ui/Navbar";
 import { Button } from "../ui/Button";
+import { Card } from "../ui/Card";
 
 const ProfileCustomer = () => {
   const { user } = useContext(UserContext);
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
+  const [member, setMember] = useState([]);
 
   useEffect(() => {
-    getInfo();
+    getMember();
   }, [user]);
 
-  const getInfo = async (e) => {
+  const getMember = async (e) => {
     await axios
       .get("https://backendyogy.onrender.com/api/v1/auth/", {
+        headers: {
+          Authorization: `Bearer ${user.access_token}`,
+        },
+      })
+      .then(({ data }) => {
+        const res = data;
+        setMember(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getOrdersAll();
+  }, [user]);
+
+  const getOrdersAll = async (e) => {
+    await axios
+      .get("https://backendyogy.onrender.com/api/v1/orders/all", {
         headers: {
           Authorization: `Bearer ${user.access_token}`,
         },
@@ -31,14 +53,10 @@ const ProfileCustomer = () => {
       });
   };
 
-  useEffect(() => {
-    getOrders();
-  }, [user]);
-
-  const getOrders = async (e) => {
+  const getOrdersSorted = async (query) => {
     await axios
       .get(
-        "https://backendyogy.onrender.com/api/v1/orders/sorted?mode=В обработке&offset=0",
+        `https://backendyogy.onrender.com/api/v1/orders/sorted?mode=${query}&offset=0`,
         {
           headers: {
             Authorization: `Bearer ${user.access_token}`,
@@ -60,16 +78,16 @@ const ProfileCustomer = () => {
       <Container>
         <section className={Style.profileBox}>
           <div className={Style.description}>
-            <p>Имя заказчика</p>
-            <p>{data.login}</p>
+            <p className={Style.profileTitle}>Имя заказчика</p>
+            <p className={Style.profileDescription}>{member.username}</p>
           </div>
           <div className={Style.description}>
-            <p>Название компании</p>
-            <p>{data.id}</p>
+            <p className={Style.profileTitle}>Название компании</p>
+            <p className={Style.profileDescription}>{member.id}</p>
           </div>
           <div className={Style.description}>
-            <p>Роль</p>
-            <p>{data.roles}</p>
+            <p className={Style.profileTitle}>Роль</p>
+            <p className={Style.profileDescription}>{member.roles}</p>
           </div>
         </section>
         <section className={Style.order}>
@@ -86,7 +104,7 @@ const ProfileCustomer = () => {
                 <label>
                   <input
                     onClick={() => {
-                      getOrders();
+                      getOrdersSorted("В обработке");
                     }}
                     type="radio"
                     value="В обработке"
@@ -95,19 +113,50 @@ const ProfileCustomer = () => {
                   В обработке <img src="/panding.svg" alt="panding" />
                 </label>
                 <label>
-                  <input type="radio" value="Принят" name="status" />
+                  <input
+                    onClick={() => {
+                      getOrdersSorted("Принят");
+                    }}
+                    type="radio"
+                    value="Принят"
+                    name="status"
+                  />
                   Принят <img src="/confirm.svg" alt="confirm" />
                 </label>
                 <label>
-                  <input type="radio" value="Выполнен" name="status" />
+                  <input
+                    onClick={() => {
+                      getOrdersSorted("Выполнен");
+                    }}
+                    type="radio"
+                    value="Выполнен"
+                    name="status"
+                  />
                   Выполнен <img src="/accept.svg" alt="accept" />
                 </label>
                 <label>
-                  <input type="radio" value="Отклонен" name="status" />
+                  <input
+                    onClick={() => {
+                      getOrdersSorted("Отклонён");
+                    }}
+                    type="radio"
+                    value="Отклонен"
+                    name="status"
+                  />
                   Отклонен <img src="/rejected.svg" alt="rejected" />
                 </label>
               </fieldset>
-              <div id="card" className={Style.cardBox}></div>
+              <div className={Style.cardBox}>
+                {data.map((value) => {
+                  return (
+                    <Card
+                      key={value.id}
+                      name={value.name}
+                      description={value.description}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
@@ -117,18 +166,3 @@ const ProfileCustomer = () => {
 };
 
 export default ProfileCustomer;
-// const filter = (props) => {
-//   const test = document.getElementById("card");
-//   status
-//     .filter((value) => {
-//       return value.status === props;
-//     })
-//     .map((value) => {
-//       console.log(value.title);
-//       test.innerHTML = `<div id="card" class=${Style.card}>
-//           <h2 class=${Style.cardTitle}>${value.title}
-//           </h2>
-//           <p class=${Style.cardDescription}>${value.description}</p>
-//         </div>`;
-//     });
-// };

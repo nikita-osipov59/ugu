@@ -1,7 +1,19 @@
 @import "../../styles/variables.modules";
 
+.profileBox {
+  padding: 60px 0px;
+  .profileTitle {
+    padding: 5px 0px;
+  }
+  .profileDescription {
+    border: 1px solid black;
+    display: inline;
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
+
 .order {
-  margin-top: 30px;
   .titleBox {
     display: flex;
     margin-left: 200px;
@@ -16,44 +28,29 @@
   .content {
     margin-top: 20px;
     display: flex;
-    .cardBox {
+    .fieldset {
       display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      min-width: 200px;
+      label {
+        width: fit-content;
+        & + label {
+          margin-top: 8px;
+        }
+        img {
+          margin-left: 10px;
+        }
+      }
+      input {
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+    .cardBox {
+      display: -webkit-box;
       justify-content: center;
-      .card {
-        border: $border-default;
-        border-radius: $border-radius-default;
-        padding: 15px 40px 20px 30px;
-        width: 450px;
-        height: 250px;
-        .cardTitle {
-          font-weight: $fontWeight-bold;
-          font-size: $fontSize-medium;
-          max-width: 370px;
-        }
-        .cardDescription {
-          margin-top: 15px;
-        }
-      }
-    }
-  }
-  .fieldset {
-    display: flex;
-    flex-direction: column;
-    min-width: 200px;
-    label {
-      width: fit-content;
-      & + label {
-        margin-top: 8px;
-      }
-      img {
-        margin-left: 10px;
-      }
-    }
-    input {
-      margin-right: 10px;
-      cursor: pointer;
+      gap: 30px;
+      overflow-x: auto;
     }
   }
 }
