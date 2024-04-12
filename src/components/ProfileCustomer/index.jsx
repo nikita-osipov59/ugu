@@ -8,71 +8,32 @@ import { NavBar } from "../ui/Navbar";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import Loader from "../ui/Loader";
+import { getCurrentMember, getOrdersAll, getSortedOrders } from "../../api/functions";
 
 const ProfileCustomer = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [member, setMember] = useState([]);
-  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+    getOrders();
     getMember();
   }, [user]);
 
-  const getMember = async (e) => {
-    await axios
-      .get("https://backendyogy.onrender.com/api/v1/auth/", {
-        headers: {
-          Authorization: `Bearer ${user.access_token}`,
-        },
-      })
-      .then(({ data }) => {
-        const res = data;
-        setMember(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  
+  const getMember = async () => {
+    let currentMember = await getCurrentMember(user);
+    setMember(currentMember);
   };
-
-  useEffect(() => {
-    getOrdersAll();
-  }, [user]);
-
-  const getOrdersAll = async (e) => {
-    await axios
-      .get("https://backendyogy.onrender.com/api/v1/orders/all", {
-        headers: {
-          Authorization: `Bearer ${user.access_token}`,
-        },
-      })
-      .then(({ data }) => {
-        const res = data;
-        setData(res);
-        setLoading(true)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  
+  const getOrders = async () => {
+    const res =  await getOrdersAll(user);
+    setData(res);
   };
-
-  const getOrdersSorted = async (query) => {
-    await axios
-      .get(
-        `https://backendyogy.onrender.com/api/v1/orders/sorted?mode=${query}&offset=0`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.access_token}`,
-          },
-        }
-      )
-      .then(({ data }) => {
-        const res = data;
-        setData(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  
+  const getSorted = async (query) => {
+    const sortedData = await getSortedOrders(query, user);
+    setData(sortedData);
   };
 
   return (
@@ -82,15 +43,15 @@ const ProfileCustomer = () => {
         <section className={Style.profileBox}>
           <div className={Style.description}>
             <p className={Style.profileTitle}>Имя заказчика</p>
-            <p className={Style.profileDescription}>{member.username}</p>
+            <p className={Style.profileDescription}>{member? member.username : <Loader width='26' height='26'/>}</p>
           </div>
           <div className={Style.description}>
             <p className={Style.profileTitle}>Название компании</p>
-            <p className={Style.profileDescription}>{member.id}</p>
+            <p className={Style.profileDescription}>{member? member.id : <Loader width='26' height='26'/>}</p>
           </div>
           <div className={Style.description}>
             <p className={Style.profileTitle}>Роль</p>
-            <p className={Style.profileDescription}>{member.roles}</p>
+            <p className={Style.profileDescription}>{member? member.roles : <Loader width='26' height='26'/>}</p>
           </div>
         </section>
         <section className={Style.order}>
@@ -107,7 +68,7 @@ const ProfileCustomer = () => {
                 <label>
                   <input
                     onClick={() => {
-                      getOrdersSorted("В обработке");
+                      getSorted("В обработке");
                     }}
                     type="radio"
                     value="В обработке"
@@ -118,7 +79,7 @@ const ProfileCustomer = () => {
                 <label>
                   <input
                     onClick={() => {
-                      getOrdersSorted("Принят");
+                      getSorted("Принят");
                     }}
                     type="radio"
                     value="Принят"
@@ -129,7 +90,7 @@ const ProfileCustomer = () => {
                 <label>
                   <input
                     onClick={() => {
-                      getOrdersSorted("Выполнен");
+                      getSorted("Выполнен");
                     }}
                     type="radio"
                     value="Выполнен"
@@ -140,7 +101,7 @@ const ProfileCustomer = () => {
                 <label>
                   <input
                     onClick={() => {
-                      getOrdersSorted("Отклонён");
+                      getSorted("Отклонён");
                     }}
                     type="radio"
                     value="Отклонен"
@@ -158,7 +119,7 @@ const ProfileCustomer = () => {
                       description={value.description}
                     />
                   );
-                }) :<Loader/>}
+                }) :<Loader width={80} height={80}/>}
               </div>
             </div>
           </div>
