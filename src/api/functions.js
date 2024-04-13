@@ -54,6 +54,25 @@ export const getSortedOrders = async (query, user) => {
   return response;
 };
 
+export const getOrderById = async (user, id) => {
+  const response = await axios
+      .get(`https://backendyogy.onrender.com/api/v1/orders/${id}`, {
+        headers: {
+          Authorization: `Bearer ${
+            user.access_token
+          }`,
+        },
+      })
+      .then(({ data }) => {
+        let res = data;
+        return res;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return response;
+}
+
 export const getProjectsAll = async (user) => {
   const response = await axios
     .get("https://backendyogy.onrender.com/api/v1/projects/get/all", {
@@ -70,3 +89,20 @@ export const getProjectsAll = async (user) => {
     });
   return response;
 };
+
+export const getProjectById = async (user, id) =>{
+  const response = await axios
+    .get("https://backendyogy.onrender.com/api/v1/projects/get/all", { //TODO когда будет гет на определенный проект поменять ссылку
+      headers: {
+        Authorization: `Bearer ${user.access_token}`,
+      },
+    })
+    .then(({ data }) => {
+      let res = data;
+      return res;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return response;
+}

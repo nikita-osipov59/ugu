@@ -15,9 +15,10 @@ export const Card = ({
   types,
   identity,
   id,
+  path,
 }) => {
   return (
-    <Link to={ROUTER_PATH.ORDER + `/${id}`} className={Style.card}>
+    <Link to={path + `/${id}`} className={Style.card}>
       <h1 className={Style.cardTitle}>{name}</h1>
       <div className={Style.cardDescription}>{description}</div>
       <ul>

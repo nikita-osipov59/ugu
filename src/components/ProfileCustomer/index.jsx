@@ -12,6 +12,7 @@ import {
   getOrdersAll,
   getSortedOrders,
 } from "../../api/functions";
+import { ROUTER_PATH } from "../const/PATH";
 
 const ProfileCustomer = () => {
   const { user } = useContext(UserContext);
@@ -127,6 +128,7 @@ const ProfileCustomer = () => {
                         id={value.id}
                         name={value.name}
                         description={value.description}
+                        path={ROUTER_PATH.ORDER}
                       />
                     );
                   })

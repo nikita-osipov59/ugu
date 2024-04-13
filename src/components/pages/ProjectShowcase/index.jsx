@@ -9,6 +9,7 @@ import { UserContext } from "../../UserProvider";
 import { getProjectsAll } from "../../../api/functions";
 import { Card } from "../../ui/Card";
 import { Container } from "../../ui/Container";
+import { ROUTER_PATH } from "../../const/PATH";
 //import { Card } from '../../ui/Card';
 
 const ProjectShowcase = () => {
@@ -22,7 +23,6 @@ const ProjectShowcase = () => {
   const getProjects = async () => {
     const res = await getProjectsAll(user);
     setData(res);
-    console.log(res);
   };
 
   return (
@@ -46,7 +46,9 @@ const ProjectShowcase = () => {
                   data.map((value) => {
                     return (
                       <Card
+                        path={ROUTER_PATH.PROJECT}
                         key={value.id}
+                        id={value.id}
                         name={value.name}
                         deadline_date={value.deadline_date}
                         registration_date={value.registration_date}
