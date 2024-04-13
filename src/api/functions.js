@@ -53,3 +53,20 @@ export const getSortedOrders = async (query, user) => {
     });
     return respons;
 }
+
+export const getProjectsAll = async (user) =>{
+  const response = await axios
+    .get("https://backendyogy.onrender.com/api/v1/projects/get/all",{
+      headers: {
+        Authorization: `Bearer ${user.access_token}`,
+      },
+    })
+    .then(({data}) =>{
+      const res = data;
+      return res
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    return response;
+}
