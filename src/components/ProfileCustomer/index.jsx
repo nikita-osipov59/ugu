@@ -124,6 +124,7 @@ const ProfileCustomer = () => {
                     return (
                       <Card
                         key={value.id}
+                        id={value.id}
                         name={value.name}
                         description={value.description}
                       />

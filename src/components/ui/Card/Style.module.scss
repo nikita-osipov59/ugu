@@ -1,11 +1,13 @@
 @import "../../../styles/variables.modules";
 
 .card {
+  display: block;
   border: $border-default;
   border-radius: $border-radius-default;
   padding: 15px 40px 20px 30px;
   width: 400px;
   height: 250px;
+  color: $color-accent;
   .cardTitle {
     font-weight: $fontWeight-bold;
     font-size: $fontSize-medium;

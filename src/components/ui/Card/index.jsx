@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
+import { ROUTER_PATH } from "../../const/PATH";
 import Style from "./Style.module.scss";
 
 export const Card = ({
@@ -12,9 +14,10 @@ export const Card = ({
   spheres,
   types,
   identity,
+  id,
 }) => {
   return (
-    <div className={Style.card}>
+    <Link to={ROUTER_PATH.ORDER + `/${id}`} className={Style.card}>
       <h1 className={Style.cardTitle}>{name}</h1>
       <div className={Style.cardDescription}>{description}</div>
       <ul>
@@ -26,6 +29,6 @@ export const Card = ({
         <li>{lecturer ? `Руководитель: ${lecturer.username}` : ""}</li>
         <li>{spheres ? `Сфера: ${spheres}` : ""}</li>
       </ul>
-    </div>
+    </Link>
   );
 };
