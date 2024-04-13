@@ -61,6 +61,8 @@
         font-size: $fontSize-big;
         font-weight: $fontWeight-black;
         transition: $transition-default;
+        width: 340px;
+        height: 120px;
         &:hover {
           background-color: darken($color-btn-accent, $amount: 10);
         }

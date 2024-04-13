@@ -1,55 +1,70 @@
 @import "../../../styles/variables.modules";
 
-.body_cont{
-    margin: 3rem;
-    h2{
-        font-weight: $fontWeight-black;
-        font-size: $fontSize-medium - 6px;
-    }
-}
-.search_cont{
-    
-    input{
-        border-radius: $border-radius-default;
-        border: $border-default;
-        width: 1200px;
-        height: 100px;
-        font-size: $fontSize-huge;
-        font-weight: 100;
-        padding: 30px 28px;
-    }
-    button{
-        width: 200px;
-        height: 80px;
-        border-radius: $border-radius-default;
-        font-size: $fontSize-big + 6px;
-        font-weight: $fontWeight-medium;
-        margin-left: 30px;
-    }
+.test {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 0px;
 }
 
-.project_list_cont{
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    row-gap: 50px;
-    .project_cont{
-        border: $border-default;
-        border-radius: $border-radius-default;
-        padding: 30px 15px;
-        width: 450px;
-        height: 250px;
-        & *{
-            margin-top: 8px;
-        }
-    }
+.search {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.project_page_switcher{
-    text-align: center;
-    button{
-        font-size: $fontSize-big;
-        border: $border-default;
-        padding: 3px 8px;
+.body_cont {
+  margin: 3rem;
+  h2 {
+    font-weight: $fontWeight-black;
+    font-size: $fontSize-medium - 6px;
+  }
+}
+.search_cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    border-radius: $border-radius-default;
+    border: $border-default;
+    width: 600px;
+    height: 80px;
+    font-size: $fontSize-huge;
+    font-weight: 100;
+    padding: 30px 28px;
+  }
+  button {
+    width: 200px;
+    height: 80px;
+    border-radius: $border-radius-default;
+    font-size: $fontSize-big + 6px;
+    font-weight: $fontWeight-medium;
+    margin-left: 30px;
+  }
+}
+
+.project_list_cont {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  .project_cont {
+    border: $border-default;
+    border-radius: $border-radius-default;
+    padding: 30px 15px;
+    width: 450px;
+    height: 250px;
+    & * {
+      margin-top: 8px;
     }
+  }
+}
+
+.project_page_switcher {
+  text-align: center;
+  button {
+    font-size: $fontSize-big;
+    border: $border-default;
+    padding: 3px 8px;
+  }
 }

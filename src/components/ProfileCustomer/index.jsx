@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
 
 import Style from "./Style.module.scss";
 import { UserContext } from "../UserProvider";
@@ -8,7 +7,11 @@ import { NavBar } from "../ui/Navbar";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 import Loader from "../ui/Loader";
-import { getCurrentMember, getOrdersAll, getSortedOrders } from "../../api/functions";
+import {
+  getCurrentMember,
+  getOrdersAll,
+  getSortedOrders,
+} from "../../api/functions";
 
 const ProfileCustomer = () => {
   const { user } = useContext(UserContext);
@@ -20,17 +23,16 @@ const ProfileCustomer = () => {
     getMember();
   }, [user]);
 
-  
   const getMember = async () => {
     let currentMember = await getCurrentMember(user);
     setMember(currentMember);
   };
-  
+
   const getOrders = async () => {
-    const res =  await getOrdersAll(user);
+    const res = await getOrdersAll(user);
     setData(res);
   };
-  
+
   const getSorted = async (query) => {
     const sortedData = await getSortedOrders(query, user);
     setData(sortedData);
@@ -43,15 +45,21 @@ const ProfileCustomer = () => {
         <section className={Style.profileBox}>
           <div className={Style.description}>
             <p className={Style.profileTitle}>Имя заказчика</p>
-            <p className={Style.profileDescription}>{member? member.username : <Loader width='26' height='26'/>}</p>
+            <div className={Style.profileDescription}>
+              {member ? member.username : <Loader width="26" height="26" />}
+            </div>
           </div>
           <div className={Style.description}>
             <p className={Style.profileTitle}>Название компании</p>
-            <p className={Style.profileDescription}>{member? member.id : <Loader width='26' height='26'/>}</p>
+            <div className={Style.profileDescription}>
+              {member ? member.id : <Loader width="26" height="26" />}
+            </div>
           </div>
           <div className={Style.description}>
             <p className={Style.profileTitle}>Роль</p>
-            <p className={Style.profileDescription}>{member? member.roles : <Loader width='26' height='26'/>}</p>
+            <div className={Style.profileDescription}>
+              {member ? member.roles : <Loader width="26" height="26" />}
+            </div>
           </div>
         </section>
         <section className={Style.order}>
@@ -111,15 +119,19 @@ const ProfileCustomer = () => {
                 </label>
               </fieldset>
               <div className={Style.cardBox}>
-                {data? data.map((value) => {
-                  return (
-                    <Card
-                      key={value.id}
-                      name={value.name}
-                      description={value.description}
-                    />
-                  );
-                }) :<Loader width={80} height={80}/>}
+                {data ? (
+                  data.map((value) => {
+                    return (
+                      <Card
+                        key={value.id}
+                        name={value.name}
+                        description={value.description}
+                      />
+                    );
+                  })
+                ) : (
+                  <Loader width={80} height={80} />
+                )}
               </div>
             </div>
           </div>

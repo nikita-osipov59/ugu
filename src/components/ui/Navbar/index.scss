@@ -1,37 +1,36 @@
 @import "../../../styles/variables.modules";
 
-
-.logo_cont{
-    background-image: url(/logo.png);
-    background-repeat: no-repeat;
-    height: 54px;
-    width: 524px;
+.logo_cont {
+  background-image: url(/logo.png);
+  background-repeat: no-repeat;
+  height: 54px;
+  width: 524px;
 }
-.navbar_cont{
-    list-style-type: none;
-    margin: 0;
-    padding: 21px 28px;
-    overflow: hidden;
-    background-color: $color-grey-background;
-    display: flex;
-    justify-content: space-between;
-    line-height: $lineHeight-medium;
-    button{
-        background-color: $color-btn-user;
-        color: #fff;
-        border-radius: $border-radius-default;
-        padding: 10px 30px;
-        margin-top: 10px;
-    }
-    div{
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 8%;
-        right: 3.3%;
-        border: $border-default;
-        border-radius: $border-radius-default;
-        padding: 5px 6px;
-        z-index: 1;
-    }
+.navbar_cont {
+  list-style-type: none;
+  margin: 0;
+  padding: 21px 28px;
+  overflow: hidden;
+  background-color: $color-grey-background;
+  display: flex;
+  justify-content: space-between;
+  line-height: $lineHeight-medium;
+  button {
+    background-color: $color-btn-user;
+    color: #fff;
+    border-radius: $border-radius-default;
+    padding: 10px 30px;
+    margin-top: 10px;
+  }
+  div {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 10px;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    padding: 5px 6px;
+    z-index: 1;
+  }
 }

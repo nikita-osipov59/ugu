@@ -2,18 +2,30 @@ import React from "react";
 
 import Style from "./Style.module.scss";
 
-export const Card = ({ name, description, info }) => {
+export const Card = ({
+  name,
+  description,
+  count_place,
+  deadline_date,
+  registration_date,
+  lecturer,
+  spheres,
+  types,
+  identity,
+}) => {
   return (
     <div className={Style.card}>
       <h1 className={Style.cardTitle}>{name}</h1>
       <div className={Style.cardDescription}>{description}</div>
-      {info ? (
-        <ul>
-          <li>Срок до:</li>
-          <li>Мест:</li>
-          <li>Год набора:</li>
-        </ul>
-      ) : null}
+      <ul>
+        <li>{deadline_date ? `Срок до:  ${deadline_date}` : ""}</li>
+        <li>{count_place ? `Мест: ${count_place}` : ""}</li>
+        <li>{registration_date ? `Год набора: ${registration_date}` : ""}</li>
+        <li>{identity ? `Идентичность: ${identity}` : ""}</li>
+        <li>{types ? `Типы: ${types}` : ""}</li>
+        <li>{lecturer ? `Руководитель: ${lecturer.username}` : ""}</li>
+        <li>{spheres ? `Сфера: ${spheres}` : ""}</li>
+      </ul>
     </div>
   );
 };

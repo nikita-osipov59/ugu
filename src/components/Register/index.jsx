@@ -73,7 +73,7 @@ const Register = () => {
                   required
                 />
               </label>
-              <button type="submit">Войти</button>
+              <button type="submit">Регистрация</button>
               {status ? (
                 <p>
                   Нет аккаунта?&nbsp;

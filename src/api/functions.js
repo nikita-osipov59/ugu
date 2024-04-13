@@ -37,7 +37,7 @@ export const getCurrentMember = async (user) => {
 export const getSortedOrders = async (query, user) => {
   const response = await axios
     .get(
-      `https://backendyogy.onrender.com/api/v1/orders/sorted?mode=${query}&offset=0`,
+      `https://backendyogy.onrender.com/api/v1/orders/sorted?mode=${query}`,
       {
         headers: {
           Authorization: `Bearer ${user.access_token}`,

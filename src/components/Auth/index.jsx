@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { UserContext } from "../UserProvider";
+import { Container } from "../ui/Container";
 import { ROUTER_PATH } from "../const/PATH";
 import AuthStyle from "./Auth.module.scss";
-import { Container } from "../ui/Container";
 
 const Auth = () => {
   const [login, setLogin] = useState("");

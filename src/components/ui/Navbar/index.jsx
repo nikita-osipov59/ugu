@@ -1,6 +1,6 @@
 import { UserContext } from "../../UserProvider";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ROUTER_PATH } from "../../const/PATH";
 import "./index.scss";
 
@@ -27,21 +27,22 @@ export const NavBar = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <header>
       <ul className="navbar_cont">
         <li>
-          <img className="logo_cont" />
+          <Link to={ROUTER_PATH.HOME}>
+            <img className="logo_cont" />
+          </Link>
         </li>
         <li>
           <button onClick={showHideMenu}>{user.login}</button>
         </li>
         <div className="nav_menu">
           <button onClick={() => navigate(ROUTER_PATH.HOME)}>Главная</button>
-          <button>Профиль</button>
-          {/*//TODO в зависимости от роли в тот профиль и кидать юзера */}
-          <button onClick={quit}>Выход</button>
+          <button onClick={() => navigate(ROUTER_PATH.PROFILE)}>Профиль</button>
+          <button onClick={() => quit()}>Выход</button>
         </div>
       </ul>
-    </div>
+    </header>
   );
 };
