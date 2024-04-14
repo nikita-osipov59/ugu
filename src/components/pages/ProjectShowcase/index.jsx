@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { Button } from "../../ui/Button";
 import { Filter } from "../../ui/Filter";
 import Loader from "../../ui/Loader";
@@ -10,19 +10,39 @@ import { getProjectsAll } from "../../../api/functions";
 import { Card } from "../../ui/Card";
 import { Container } from "../../ui/Container";
 import { ROUTER_PATH } from "../../const/PATH";
-//import { Card } from '../../ui/Card';
+import { arrayToMatrix } from "../../../utils";
 
 const ProjectShowcase = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
+	const [matrixData, setMatrixData] = useState();
+	const [showedElementsId, setElementsId] = useState(0);
+	const observer = useRef();
+	const lastElement = useRef();
+
+	useEffect(() =>{
+		if(data === undefined) return;
+		if(observer.current) observer.current.disconnect();
+		let callback = function(enteries, observer){
+			if(enteries[0].isIntersecting && showedElementsId <= matrixData.length){
+				setData([...data, ...matrixData[showedElementsId + 1]])
+				setElementsId(showedElementsId + 1)
+			}
+		}
+		observer.current = new IntersectionObserver(callback);
+		observer.current.observe(lastElement.current)
+	}, [data])
 
   useEffect(() => {
     getProjects();
   }, [user]);
-
+	
   const getProjects = async () => {
     const res = await getProjectsAll(user);
-    setData(res);
+		let matrix_res = await arrayToMatrix(res);
+		
+		setMatrixData(matrix_res);
+    setData(matrix_res[showedElementsId]);
   };
 
   return (
@@ -63,6 +83,7 @@ const ProjectShowcase = () => {
                 ) : (
                   <Loader width={120} height={120} />
                 )}
+								<div id="observer_el" ref={lastElement} style={{width: 140, height: 20}}></div>
               </div>
             </div>
           </div>
