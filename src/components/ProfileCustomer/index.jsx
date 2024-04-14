@@ -13,16 +13,22 @@ import {
   getSortedOrders,
 } from "../../api/functions";
 import { ROUTER_PATH } from "../const/PATH";
+import Popup from "../ui/Popup";
 
 const ProfileCustomer = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [member, setMember] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getOrders();
     getMember();
   }, [user]);
+
+  const showPopup = () => {
+    setIsOpen(!isOpen);
+  };
 
   const getMember = async () => {
     let currentMember = await getCurrentMember(user);
@@ -64,11 +70,17 @@ const ProfileCustomer = () => {
           </div>
         </section>
         <section className={Style.order}>
+          {isOpen && <Popup onClick={showPopup} />}
           <div className={Style.titleBox}>
             <div className={Style.title}>
               <p>Заказы</p>
             </div>
-            <Button title="Создать" color="white" background="#61ff00" />
+            <Button
+              onClick={() => showPopup()}
+              title="Создать"
+              color="white"
+              background="#61ff00"
+            />
           </div>
           <div className={Style.status}>
             <div className={Style.title}>Статус</div>
