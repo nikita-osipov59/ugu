@@ -49,3 +49,14 @@
         
     }
 }
+.new_letter_cont{
+    text-align: center;
+    button{
+        font-size: $fontSize-big;
+        font-weight: $fontWeight-bold;
+        border: $border-default;
+        border-radius: $border-radius-default;
+        padding: 6px 100px;
+        width: 70%;
+    }
+}
