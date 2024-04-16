@@ -12,39 +12,42 @@
 }
 
 .student_letters {
-  width: 60%;
   margin: 2rem auto;
-  text-align: center;
   position: relative;
   h2 {
+    text-align: center;
     font-size: 20px;
     font-weight: 600;
   }
-  & > h2 {
-    margin-bottom: 3rem;
-  }
   .letter {
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #d9d9d980;
     border-radius: $border-radius-default;
     padding: 16px;
     margin-top: 20px;
-    position: relative;
-    h2,
-    p {
-      width: 70%;
+    h2 {
+      max-width: 60%;
     }
     .buttons {
       display: flex;
       flex-direction: column;
-      float: right;
-      position: absolute;
-      top: 15%;
-      right: 5%;
-      button {
-        font-size: 16px;
-        margin-bottom: 20px;
+      font-size: 16px;
+      button + button {
+        margin-top: 20px;
       }
     }
+  }
+}
+.new_letter_cont {
+  text-align: center;
+  button {
+    font-size: $fontSize-big;
+    font-weight: $fontWeight-bold;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    padding: 6px 100px;
+    width: 70%;
   }
 }

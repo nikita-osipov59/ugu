@@ -62,7 +62,7 @@ const ProjectShowcase = () => {
                 />
               </div>
               <div className={style.project_list_cont}>
-                {loading ? (
+                {data ? (
                   data.map((value) => {
                     return (
                       <Card

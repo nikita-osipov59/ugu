@@ -104,3 +104,37 @@ export const getProjectById = async (user, id) => {
     });
   return response;
 };
+
+export const getProjectLetters = async (user, project_id) =>{
+  const response = await axios
+    .get(`https://backendyogy.onrender.com/api/v1/letter/all/${project_id}`, {
+      headers: {
+        Authorization: `Bearer ${user.access_token}`,
+      },
+    })
+    .then(({ data }) => {
+      let res = data;
+      return res;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  return response;
+} 
+
+export const addNewLetter = async (user, project_id, text) =>{
+  const response = await axios
+    .post(`https://backendyogy.onrender.com/api/v1/letter/add${project_id}`, {
+      headers: {
+        Authorization: `Bearer ${user.access_token}`,
+      },
+      text,
+    })
+    .then((res) =>{
+      console.log(res);
+    })
+    .catch((error) =>{
+      console.log(error);
+    })
+    return response;
+}

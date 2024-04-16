@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { getProjectById, getProjectLetters } from "../../../api/functions";
 
 import { UserContext } from "../../UserProvider";
-import { getProjectById } from "../../../api/functions";
 import style from "./ProjectCard.module.scss";
 import Popup from "../../ui/Popup/Letter";
 import { NavBar } from "../../ui/Navbar";
 import { Button } from "../../ui/Button";
 import { Container } from "../../ui/Container";
+import Loader from "../../ui/Loader";
 
 const ProjectCard = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [letters, setLetters] = useState();
   const { id } = useParams();
 
   const getProject = async () => {
@@ -23,9 +25,14 @@ const ProjectCard = () => {
   const showPopup = () => {
     setIsOpen(!isOpen);
   };
+  const getLetters = async () => {
+    const response = await getProjectLetters(user, id);
+    setLetters(response);
+  };
 
   useEffect(() => {
     getProject();
+    getLetters();
   }, []);
 
   return (
@@ -45,46 +52,34 @@ const ProjectCard = () => {
         <div className={style.student_letters}>
           {isOpen && <Popup onClick={showPopup} />}
           <h2>Письма студентов</h2>
-          <div className={style.letter}>
-            <h2>Иванов А.А</h2>
-            <p>
-              Текст lorem askdas bla bla bla lorem askdas bla bla blalorem
-              askdas bla bla blalorem askdas bla bla bla lorem askdas bla bla
-              bla
-            </p>
-            <div className={style.buttons}>
-              <Button
-                title={"Принять"}
-                color={"black"}
-                background={"#24FF00"}
-              />
-              <Button
-                title={"Отклонить"}
-                color={"black"}
-                background={"#FF0000"}
-              />
-            </div>
-          </div>
-          <div className={style.letter}>
-            <h2>Иванов А.А</h2>
-            <p>
-              Текст lorem askdas bla bla bla lorem askdas bla bla blalorem
-              askdas bla bla blalorem askdas bla bla bla lorem askdas bla bla
-              bla
-            </p>
-            <div className={style.buttons}>
-              <Button
-                title={"Принять"}
-                color={"black"}
-                background={"#24FF00"}
-              />
-              <Button
-                title={"Отклонить"}
-                color={"black"}
-                background={"#FF0000"}
-              />
-            </div>
-          </div>
+          {letters ? (
+            letters.map((letter, i) => {
+              return (
+                <div key={i} className={style.letter}>
+                  <div className={style.username}>
+                    <h2>{letter.user.username}</h2>
+                  </div>
+                  <p>{letter.text}</p>
+                  <div className={style.buttons}>
+                    <Button
+                      title={"Принять"}
+                      color={"black"}
+                      background={"#24FF00"}
+                    />
+                    <Button
+                      title={"Отклонить"}
+                      color={"black"}
+                      background={"#FF0000"}
+                    />
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <Loader />
+          )}
+        </div>
+        <div className={style.new_letter_cont}>
           <Button
             onClick={() => showPopup()}
             margin={"30px 0px"}
