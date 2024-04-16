@@ -19,25 +19,19 @@ const ProfileCustomer = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [member, setMember] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    getOrders();
-    getMember();
-  }, [user]);
-
-  const showPopup = () => {
-    setIsOpen(!isOpen);
-  };
 
   const getMember = async () => {
     let currentMember = await getCurrentMember(user);
     setMember(currentMember);
+    setIsLoading(true);
   };
 
   const getOrders = async () => {
     const res = await getOrdersAll(user);
     setData(res);
+    setIsLoading(true);
   };
 
   const getSorted = async (query) => {
@@ -45,30 +39,38 @@ const ProfileCustomer = () => {
     setData(sortedData);
   };
 
+  const showPopup = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    setIsLoading(false);
+    getOrders();
+    getMember();
+  }, [user]);
+
   return (
     <>
       <NavBar />
       <Container>
-        <section className={Style.profileBox}>
-          <div className={Style.description}>
-            <p className={Style.profileTitle}>Имя заказчика</p>
-            <div className={Style.profileDescription}>
-              {member ? member.username : <Loader width="26" height="26" />}
+        {isLoading ? (
+          <section className={Style.profileBox}>
+            <div className={Style.description}>
+              <p className={Style.profileTitle}>Имя заказчика</p>
+              <div className={Style.profileDescription}>{member?.username}</div>
             </div>
-          </div>
-          <div className={Style.description}>
-            <p className={Style.profileTitle}>Название компании</p>
-            <div className={Style.profileDescription}>
-              {member ? member.id : <Loader width="26" height="26" />}
+            <div className={Style.description}>
+              <p className={Style.profileTitle}>Название компании</p>
+              <div className={Style.profileDescription}>{member?.id}</div>
             </div>
-          </div>
-          <div className={Style.description}>
-            <p className={Style.profileTitle}>Роль</p>
-            <div className={Style.profileDescription}>
-              {member ? member.roles : <Loader width="26" height="26" />}
+            <div className={Style.description}>
+              <p className={Style.profileTitle}>Роль</p>
+              <div className={Style.profileDescription}>{member?.roles}</div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <Loader />
+        )}
         <section className={Style.order}>
           {isOpen && <Popup onClick={showPopup} />}
           <div className={Style.titleBox}>
@@ -132,8 +134,8 @@ const ProfileCustomer = () => {
                 </label>
               </fieldset>
               <div className={Style.cardBox}>
-                {data ? (
-                  data.map((value) => {
+                {isLoading ? (
+                  data?.map((value) => {
                     return (
                       <Card
                         key={value.id}

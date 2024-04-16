@@ -14,23 +14,29 @@ const ProjectCard = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [letters, setLetters] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [letters, setLetters] = useState([]);
   const { id } = useParams();
 
   const getProject = async () => {
     const response = await getProjectById(user, id);
     setData(response);
+    setIsLoading(true);
+  };
+
+  const getLetters = async () => {
+    const response = await getProjectLetters(user, id);
+    setLetters(response);
+    setIsLoading(true);
   };
 
   const showPopup = () => {
     setIsOpen(!isOpen);
   };
-  const getLetters = async () => {
-    const response = await getProjectLetters(user, id);
-    setLetters(response);
-  };
 
   useEffect(() => {
+    setIsLoading(false);
     getProject();
     getLetters();
   }, []);
@@ -40,19 +46,25 @@ const ProjectCard = () => {
       <NavBar />
       <Container>
         <div className={style.project_info}>
-          <h2>{data.name}</h2>
-          <label>Кол-во свободных мест: {data.count_place}</label>
-          <label>Срок до: {data.deadline_date}</label>
-          <label>Описание: {data.description}</label>
-          <label>{data.identity ? `Идентичность: ${data.identity}` : ""}</label>
-          <label>{data.spheres ? `Сфера: ${data.spheres}` : ""}</label>
-          <label>{data.types ? `Типы: ${data.types}` : ""}</label>
+          {isLoading ? (
+            <>
+              <h2>{data.name}</h2>
+              <p>Кол-во свободных мест: {data.count_place}</p>
+              <p>Срок до: {data.deadline_date}</p>
+              <p>Описание: {data.description}</p>
+              <p>{data.identity ? `Идентичность: ${data.identity}` : ""}</p>
+              <p>{data.spheres ? `Сфера: ${data.spheres}` : ""}</p>
+              <p>{data.types ? `Типы: ${data.types}` : ""}</p>
+            </>
+          ) : (
+            <Loader />
+          )}
         </div>
         {/*//TODO понятное дело когда будет бек через цикл это сделать */}
         <div className={style.student_letters}>
           {isOpen && <Popup onClick={showPopup} />}
           <h2>Письма студентов</h2>
-          {letters ? (
+          {isLoading ? (
             letters.map((letter, i) => {
               return (
                 <div key={i} className={style.letter}>

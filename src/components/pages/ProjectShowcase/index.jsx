@@ -15,6 +15,7 @@ import { arrayToMatrix } from "../../../utils";
 const ProjectShowcase = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [matrixData, setMatrixData] = useState();
   const [showedElementsId, setElementsId] = useState(0);
   const observer = useRef();
@@ -33,17 +34,19 @@ const ProjectShowcase = () => {
     observer.current.observe(lastElement.current);
   }, [data]);
 
-  useEffect(() => {
-    getProjects();
-  }, [user]);
-
   const getProjects = async () => {
     const res = await getProjectsAll(user);
     let matrix_res = await arrayToMatrix(res);
 
     setMatrixData(matrix_res);
     setData(matrix_res[showedElementsId]);
+    setIsLoading(true);
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+    getProjects();
+  }, [user]);
 
   return (
     <>
@@ -62,7 +65,7 @@ const ProjectShowcase = () => {
                 />
               </div>
               <div className={style.project_list_cont}>
-                {data ? (
+                {isLoading ? (
                   data.map((value) => {
                     return (
                       <Card
