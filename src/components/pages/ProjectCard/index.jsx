@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../UserProvider";
 import { useParams } from "react-router-dom";
-import { getProjectById } from "../../../api/functions";
 
+import { UserContext } from "../../UserProvider";
+import { getProjectById } from "../../../api/functions";
 import style from "./ProjectCard.module.scss";
+import Popup from "../../ui/Popup/Letter";
 import { NavBar } from "../../ui/Navbar";
 import { Button } from "../../ui/Button";
 import { Container } from "../../ui/Container";
@@ -11,11 +12,16 @@ import { Container } from "../../ui/Container";
 const ProjectCard = () => {
   const { user } = useContext(UserContext);
   const [data, setData] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
 
   const getProject = async () => {
     const response = await getProjectById(user, id);
     setData(response);
+  };
+
+  const showPopup = () => {
+    setIsOpen(!isOpen);
   };
 
   useEffect(() => {
@@ -35,8 +41,9 @@ const ProjectCard = () => {
           <label>{data.spheres ? `Сфера: ${data.spheres}` : ""}</label>
           <label>{data.types ? `Типы: ${data.types}` : ""}</label>
         </div>
+        {/*//TODO понятное дело когда будет бек через цикл это сделать */}
         <div className={style.student_letters}>
-          {/*//TODO понятное дело когда будет бек через цикл это сделать */}
+          {isOpen && <Popup onClick={showPopup} />}
           <h2>Письма студентов</h2>
           <div className={style.letter}>
             <h2>Иванов А.А</h2>
@@ -78,6 +85,13 @@ const ProjectCard = () => {
               />
             </div>
           </div>
+          <Button
+            onClick={() => showPopup()}
+            margin={"30px 0px"}
+            title={"Написать мотивационное письмо"}
+            color={"black"}
+            background={"#FFF"}
+          />
         </div>
       </Container>
     </div>

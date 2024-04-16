@@ -13,7 +13,7 @@ import {
   getSortedOrders,
 } from "../../api/functions";
 import { ROUTER_PATH } from "../const/PATH";
-import Popup from "../ui/Popup";
+import Popup from "../ui/Popup/Order";
 
 const ProfileCustomer = () => {
   const { user } = useContext(UserContext);

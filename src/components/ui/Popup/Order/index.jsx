@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 
-import { UserContext } from "../../UserProvider";
+import { UserContext } from "../../../UserProvider";
 import Style from "./Style.module.scss";
-import { Button } from "../Button";
+import { Button } from "../../Button";
 
 const Popup = ({ onClick }) => {
   const [title, setTitle] = useState("");

@@ -91,7 +91,6 @@ export const getProjectsAll = async (user) => {
 export const getProjectById = async (user, id) => {
   const response = await axios
     .get(`https://backendyogy.onrender.com/api/v1/projects/get/${id}`, {
-      //TODO когда будет гет на определенный проект поменять ссылку
       headers: {
         Authorization: `Bearer ${user.access_token}`,
       },

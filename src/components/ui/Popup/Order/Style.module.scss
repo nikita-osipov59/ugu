@@ -1,0 +1,78 @@
+@import "../../../../styles/variables.modules.scss";
+
+.test {
+  position: absolute;
+  margin-bottom: 150px;
+  display: flex;
+  justify-content: center;
+  top: -150px;
+  left: 360px;
+
+  form {
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: $fontSize-big;
+    font-weight: $fontWeight-bold;
+    background-color: $color-secondary;
+    max-width: 495px;
+    padding: 30px;
+    border: 3px solid $color-accent;
+    border-radius: 35px;
+    z-index: 1;
+    h2 {
+      text-align: center;
+    }
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      h2 {
+        margin-bottom: 30px;
+      }
+      button {
+        padding: 10px 15px;
+        position: absolute;
+        right: -15px;
+        top: -15px;
+      }
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      font-style: italic;
+      & + label {
+        margin: 30px 0px;
+      }
+    }
+    input {
+      background-color: $color-secondary;
+      padding: 10px 15px;
+      margin-top: 10px;
+      border-radius: 25px;
+      border: 1px solid $color-accent;
+    }
+    textarea {
+      border: 1px solid $color-accent;
+      border-radius: 25px;
+      background-color: white;
+      resize: none;
+      padding: 10px 15px;
+    }
+    button {
+      background-color: $color-btn-accent;
+      border-radius: 35px;
+      padding: 15px 120px;
+      font-size: $fontSize-big;
+      font-weight: $fontWeight-medium;
+      transition: $transition-default;
+      &:hover {
+        background-color: darken($color-btn-accent, $amount: 10);
+      }
+    }
+  }
+}
